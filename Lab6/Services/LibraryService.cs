@@ -13,7 +13,7 @@
 
         public void AddBook(Book book)
         {
-            int newId = Books.Any() ? Books.Keys.Max() + 1 : 1;
+            int newId = Books.Any() ? Books.Keys.Max() + 1 : 1; // checks to see if any books are in library and assigns appropriate ID if so. Then had 1 as the false option
             book.Id = newId;
             Books[newId] = book;
         }
@@ -104,15 +104,95 @@
 
         public List<Book> GetBorrowedBooks(int userId)
         {
-            if (BorrowedBooks.TryGetValue(userId, out Dictionary<int, Book> userBorrowedBooks))
+            if (BorrowedBooks.TryGetValue(userId, out var userBorrowedBooks))
             {
                 return userBorrowedBooks.Values.ToList();
             }
 
-            return new List<Book>(); // Return an empty list if the user has no borrowed books or doesn't exist
+            return new List<Book>();
         }
 
-    }
+
+
+        public bool UpdateBook(int bookId, Book updatedBook)
+        {
+            // Check if the book with the given bookId exists.
+            if (Books.TryGetValue(bookId, out Book existingBook))
+            {
+                // Update the book details with new values if provided.
+                if (updatedBook.Title != null)
+                {
+                    existingBook.Title = updatedBook.Title;
+                }
+
+                if (updatedBook.Author != null)
+                {
+                    existingBook.Author = updatedBook.Author;
+                }
+
+                if (updatedBook.ISBN != null)
+                {
+                    existingBook.ISBN = updatedBook.ISBN;
+                }
+
+                return true; // Book updated successfully.
+            }
+
+            return false; // Book not found, update failed.
+        }
+
+
+
+        public Book GetBookById(int bookId)
+        {
+            if (Books.TryGetValue(bookId, out Book book))
+            {
+                return book;
+            }
+          
+
+
+                return null; // Return null if the book with the specified ID is not found.
+        }
+
+        
+
+            public User GetUserById(int userId)
+            {
+                if (Users.TryGetValue(userId, out User user))
+                {
+                    return user;
+                }
+
+                return null; // Return null if the user with the specified ID is not found.
+            }
+
+            public bool UpdateUser(int userId, User updatedUser)
+            {
+                if (Users.TryGetValue(userId, out User existingUser))
+                {
+                    // Update the user details if new values are provided.
+                    if (!string.IsNullOrEmpty(updatedUser.Name))
+                    {
+                        existingUser.Name = updatedUser.Name;
+                    }
+
+                    if (!string.IsNullOrEmpty(updatedUser.Email))
+                    {
+                        existingUser.Email = updatedUser.Email;
+                    }
+
+                    return true; // User updated successfully.
+                }
+
+                return false; // User not found, update failed.
+            }
+        }
+
+
+    
+
+
 
 
 

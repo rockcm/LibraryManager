@@ -1,0 +1,55 @@
+﻿@page "/editbook"
+@using Lab6.Services
+@inject LibraryService LibraryService
+
+
+
+
+
+<h3>Edit Book</h3>
+
+<div>
+    <label for="bookId">Enter Book ID to Edit:</label>
+    <input id="bookId" @bind="bookId" />
+    <button @onclick="FetchBook">Fetch Book</button>
+</div>
+
+@if (book != null)
+{
+    <form @onsubmit="UpdateBook">
+        <label for="title">Title:</label>
+        <input id="title" @bind="book.Title" />
+        <label for="author">Author:</label>
+        <input id="author" @bind="book.Author" />
+        <label for="isbn">ISBN:</label>
+        <input id="isbn" @bind="book.ISBN" />
+        <button type="submit">Update Book</button>
+    </form>
+    <p>@message</p>
+}
+
+@code {
+    private int bookId;
+    private Book book;
+    private string message;
+
+    private void FetchBook()
+    {
+        book = LibraryService.GetBookById(bookId);
+    }
+
+    private void UpdateBook()
+    {
+        if (book != null)
+        {
+            if (LibraryService.UpdateBook(book.Id, book))
+            {
+                message = "Book updated successfully!";
+            }
+            else
+            {
+                message = "Book update failed.";
+            }
+        }
+    }
+}

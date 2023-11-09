@@ -1,0 +1,49 @@
+﻿@page "/edituser"
+@using Lab6.Services
+@inject LibraryService LibraryService
+
+<h3>Edit User</h3>
+
+<div>
+    <label for="userId">Enter User ID to Edit:</label>
+    <input id="userId" @bind="userId" />
+    <button @onclick="FetchUser">Fetch User</button>
+</div>
+
+@if (user != null)
+{
+    <form @onsubmit="UpdateUser">
+        <label for="name">Name:</label>
+        <input id="name" @bind="user.Name" />
+        <label for="email">Email:</label>
+        <input id="email" @bind="user.Email" />
+        <button type="submit">Update User</button>
+    </form>
+    <p>@message</p>
+}
+
+@code {
+    private int userId;
+    private User user;
+    private string message;
+
+    private void FetchUser()
+    {
+        user = LibraryService.GetUserById(userId);
+    }
+
+    private void UpdateUser()
+    {
+        if (user != null)
+        {
+            if (LibraryService.UpdateUser(user.Id, user))
+            {
+                message = "User updated successfully!";
+            }
+            else
+            {
+                message = "User update failed.";
+            }
+        }
+    }
+}

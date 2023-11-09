@@ -1,0 +1,37 @@
+﻿@page "/borrowbook"
+
+@using Lab6.Services
+@inject LibraryService LibraryService
+
+<h3>Borrow a Book</h3>
+
+<form @onsubmit="Borrow">
+    <label for="bookId">Book ID:</label>
+    <input id="bookId" @bind="bookId" />
+    <label for="userId">User ID:</label>
+    <input id="userId" @bind="userId" />
+    <button type="submit">Borrow Book</button>
+</form>
+
+@if (message != null)
+{
+    <p>@message</p>
+}
+
+@code {
+    int bookId;
+    int userId;
+    string message;
+
+    void Borrow()
+    {
+        if (LibraryService.BorrowBook(bookId, userId))
+        {
+            message = "Book borrowed successfully!";
+        }
+        else
+        {
+            message = "Borrowing failed. Check book and user IDs.";
+        }
+    }
+}

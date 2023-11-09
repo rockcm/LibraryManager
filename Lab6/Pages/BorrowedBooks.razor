@@ -1,0 +1,17 @@
+﻿@page "/borrowedbooks"
+
+@using Lab6.Services
+@inject LibraryService LibraryService
+
+<h3>Borrowed Books by Users</h3>
+
+@foreach (var user in LibraryService.Users.Values)
+{
+    <h4>@user.Name</h4>
+    <ul>
+        @foreach (var book in LibraryService.GetBorrowedBooks(user.Id))
+        {
+            <li>@book.Title by @book.Author (ISBN: @book.ISBN)</li>
+        }
+    </ul>
+}

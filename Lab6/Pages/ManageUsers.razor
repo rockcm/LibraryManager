@@ -1,0 +1,39 @@
+﻿@page "/manageusers"
+
+@using Lab6.Services
+@inject LibraryService LibraryService
+
+<h3>Manage Users</h3>
+
+<!-- Add User Form -->
+<div>
+    <h4>Add User</h4>
+    <form @onsubmit="AddUser">
+        <label for="name">Name:</label>
+        <input id="name" @bind="newUser.Name" />
+        <label for="email">Email:</label>
+        <input id="email" @bind="newUser.Email" />
+        <button type="submit">Add User</button>
+    </form>
+</div>
+
+<!-- List Users Component -->
+<ListUsers users="LibraryService.Users" onDelete="DeleteUser" />
+
+@code {
+    User newUser = new User();
+
+    void AddUser()
+    {
+        LibraryService.AddUser(newUser);
+        newUser = new User(); // Clear the form
+    }
+
+    void DeleteUser(int userId)
+    {
+        LibraryService.DeleteUser(userId);
+    }
+}
+
+
+   

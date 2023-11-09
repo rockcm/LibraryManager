@@ -1,0 +1,32 @@
+﻿@using Lab6.Data
+
+
+@code {
+    [Parameter] public Dictionary<int, User> users { get; set; }
+    [Parameter] public Action<int> onDelete { get; set; }
+}
+
+<h4>Users:</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in users.Values)
+        {
+            <tr>
+                <td>@user.Id</td>
+                <td>@user.Name</td>
+                <td>@user.Email</td>
+                <td>
+                    <button @onclick="() => onDelete(user.Id)">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

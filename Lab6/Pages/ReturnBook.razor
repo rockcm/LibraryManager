@@ -1,0 +1,39 @@
+﻿@page "/returnbook"
+
+@using Lab6.Services
+@inject LibraryService LibraryService
+
+<h3>Return a Book</h3>
+
+<form @onsubmit="Return">
+    <label for="userId">User ID:</label>
+    <input id="userId" @bind="userId" />
+
+    <label for="bookId">Book ID:</label>
+    <input id="bookId" @bind="bookid" />
+
+    <button type="submit">Return Book</button>
+</form>
+
+@if (message != null)
+{
+    <p>@message</p>
+}
+
+@code {
+    int userId;
+    int bookid;
+    string message;
+
+    void Return()
+    {
+        if (LibraryService.ReturnBook(userId, bookid))
+        {
+            message = "Book returned successfully!";
+        }
+        else
+        {
+            message = "Returning failed. Check user ID or borrowed books.";
+        }
+    }
+}

@@ -1,0 +1,57 @@
+﻿<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">Lab6</a>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <nav class="flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Home
+            </NavLink>
+        </div>
+        
+        
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="managebooks">
+                <span class="oi oi-book" aria-hidden="true"></span> Manage Books
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="manageusers">
+                <span class="oi oi-person" aria-hidden="true"></span> Manage Users
+            </NavLink>
+        </div>
+       
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="borrowbook">
+                <span class="oi oi-bookmark" aria-hidden="true"></span> Borrow Book
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="returnbook">
+                <span class="oi oi-arrow-left" aria-hidden="true"></span> Return Book
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="borrowedbooks">
+                <span class="oi oi-briefcase" aria-hidden="true"></span> Borrowed Books
+            </NavLink>
+        </div>
+    </nav>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}

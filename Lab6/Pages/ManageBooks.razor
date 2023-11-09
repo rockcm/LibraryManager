@@ -1,0 +1,40 @@
+﻿@page "/managebooks"
+
+@using Lab6.Services
+@inject LibraryService LibraryService
+
+<h3>Manage Books</h3>
+
+<!-- Add Book Form -->
+<div>
+    <h4>Add Book</h4>
+    <form @onsubmit="AddBook">
+        <label for="title">Title:</label>
+        <input id="title" @bind="newBook.Title" />
+        <label for="author">Author:</label>
+        <input id="author" @bind="newBook.Author" />
+        <label for="isbn">ISBN:</label>
+        <input id="isbn" @bind="newBook.ISBN" />
+        <button type="submit">Add Book</button>
+    </form>
+</div>
+
+<!-- List Books Component -->
+<ListBooks books="LibraryService.Books" onDelete="DeleteBook" />
+
+@code {
+    Book newBook = new Book();
+
+    void AddBook()
+    {
+        LibraryService.AddBook(newBook);
+        newBook = new Book(); // Clear the form
+    }
+
+    void DeleteBook(int bookId)
+    {
+        LibraryService.DeleteBook(bookId);
+    }
+}
+
+    

@@ -1,0 +1,37 @@
+﻿@using Lab6.Data
+
+
+@code {
+    [Parameter] public Dictionary<int, Book> books { get; set; } = new Dictionary<int, Book>();
+    [Parameter] public Action<int> onDelete { get; set; }
+}
+
+
+
+<h4>Available Books:</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>ISBN</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var book in books.Values)
+        {
+            <tr>
+                <td>@book.Id</td>
+                <td>@book.Title</td>
+                <td>@book.Author</td>
+                <td>@book.ISBN</td>
+                <td>
+                    <button @onclick="() => onDelete(book.Id)">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
